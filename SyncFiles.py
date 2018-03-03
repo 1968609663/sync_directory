@@ -73,7 +73,7 @@ class SyncDirs(object):
         self.conf = conf or os.path.join(user_home, 'SyncFilesConf.ini')
 
     @get_cost_time
-    def run(self):
+    def run(self, del_empty=True):
         """
         @summary: start process assigment directory files
         :return: None
@@ -87,7 +87,8 @@ class SyncDirs(object):
 
         self._proc_new_modify(abs_files_info)
         all_dirs = [i[0] for i in abs_files_info]
-        list(map(lambda x: del_empty_dir(x), all_dirs))
+        if del_empty:
+            list(map(lambda x: del_empty_dir(x), all_dirs))
 
         tmp_info, _ = self.get_all_files()
         for _d in tmp_info:
@@ -266,5 +267,5 @@ class SyncDirs(object):
 
 if __name__ == '__main__':
     sync_work = SyncDirs()
-    sync_work.run()
+    sync_work.run(del_empty=True)
 
